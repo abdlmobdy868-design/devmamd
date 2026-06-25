@@ -1,6 +1,6 @@
 
 
------------------1. CREATE Company 
+----------------1. CREATE Company 
 CREATE TABLE Company (
     CompanyName VARCHAR(100) PRIMARY KEY,
     Address VARCHAR(200),
