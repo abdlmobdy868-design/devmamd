@@ -1,58 +1,70 @@
 
-
-----------------1. CREATE Company 
-CREATE TABLE Company (
-    CompanyName VARCHAR(100) PRIMARY KEY,
-    Address VARCHAR(200),
-    Phone VARCHAR(20)
+-- 1. PHARMA_COMPANY
+CREATE TABLE PHARMA_COMPANY (
+    Company_Name VARCHAR(100) PRIMARY KEY,
+    Address VARCHAR(255) NOT NULL,
+    Phone VARCHAR(20) NOT NULL
 );
 
-------------2. CREATE Doctor 
-CREATE TABLE Doctor (
-    DoctorID INT PRIMARY KEY,
+
+-- 2.  DOCTOR
+CREATE TABLE DOCTOR (
+    Doctor_ID VARCHAR(20) PRIMARY KEY,
     Name VARCHAR(100) NOT NULL,
-    Email VARCHAR(100),
-    Phone VARCHAR(20),
-    Specialty VARCHAR(50),
-    YearsOfExperience INT
+    Email VARCHAR(100) NOT NULL,
+    Phone VARCHAR(20) NOT NULL,
+    Specialty VARCHAR(100) NOT NULL,
+    Years_Of_Experience INT NOT NULL CHECK (Years_Of_Experience >= 0)
 );
 
--------------3. CREATE Drug 
-CREATE TABLE Drug (
-    DrugID INT PRIMARY KEY,
-    TradeName VARCHAR(100) NOT NULL,
-    DrugStrength VARCHAR(50),
-    CompanyName VARCHAR(100),
-    FOREIGN KEY (CompanyName) REFERENCES Company(CompanyName) ON DELETE CASCADE
-);
 
--- ---------4. CREATE Patient 
-CREATE TABLE Patient (
+-- 3.  PATIENT
+CREATE TABLE PATIENT (
     UR_Number VARCHAR(20) PRIMARY KEY,
     Name VARCHAR(100) NOT NULL,
-    Address VARCHAR(200),
-    Age INT,
-    Email VARCHAR(100),
-    Phone VARCHAR(20),
-    MedicareCardNumber VARCHAR(50),
-    PrimaryDoctorID INT,
-    FOREIGN KEY (PrimaryDoctorID) REFERENCES Doctor(DoctorID) ON DELETE SET NULL
+    Address VARCHAR(255) NOT NULL,
+    Age INT NOT NULL CHECK (Age > 0),
+    Email VARCHAR(100) NOT NULL,
+    Phone VARCHAR(20) NOT NULL,
+    Medicare_Card_Number VARCHAR(20) UNIQUE NULL, -- اختياري زي التاسك
+    Primary_Doctor_ID VARCHAR(20) NOT NULL,
+    FOREIGN KEY (Primary_Doctor_ID) REFERENCES DOCTOR(Doctor_ID)
 );
 
-------------------- 5. CREATE Prescription 
-CREATE TABLE Prescription (
-    PrescriptionID INT PRIMARY KEY IDENTITY(1,1),
-    Date DATE NOT NULL,
-    Quantity INT,
-    UR_Number VARCHAR(20),
-    DoctorID INT,
-    DrugID INT,
-    FOREIGN KEY (UR_Number) REFERENCES Patient(UR_Number),
-    FOREIGN KEY (DoctorID) REFERENCES Doctor(DoctorID),
-    FOREIGN KEY (DrugID) REFERENCES Drug(DrugID)
-);
--
 
+-- 4.  DRUG - PK  + Cascade Delete
+CREATE TABLE DRUG (
+    Trade_Name VARCHAR(100) NOT NULL,
+    Strength VARCHAR(50) NOT NULL,
+    Company_Name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (Trade_Name, Strength), 
+    FOREIGN KEY (Company_Name) REFERENCES PHARMA_COMPANY(Company_Name)
+        ON DELETE CASCADE -- 
+);
+
+
+-- 5.   PRESCRIPTION  M:N:M
+CREATE TABLE PRESCRIPTION (
+    UR_Number VARCHAR(20) NOT NULL,
+    Doctor_ID VARCHAR(20) NOT NULL,
+    Trade_Name VARCHAR(100) NOT NULL,
+    Strength VARCHAR(50) NOT NULL,
+    Prescription_Date DATE NOT NULL,
+    Quantity INT NOT NULL CHECK (Quantity > 0),
+    PRIMARY KEY (UR_Number, Doctor_ID, Trade_Name, Strength, Prescription_Date), -- PK 
+    
+    FOREIGN KEY (UR_Number) REFERENCES PATIENT(UR_Number),
+    FOREIGN KEY (Doctor_ID) REFERENCES DOCTOR(Doctor_ID),
+    FOREIGN KEY (Trade_Name, Strength) REFERENCES DRUG(Trade_Name, Strength) -- FK 
+);
+------------------------------------------------------
+    ph1--m drug
+    doctor1---m pathent
+    pathint1--m perscripthion
+    doctor1---m perscripthion
+    drug1--m perscriphion
+-------------------------------------------------------
+    
 
 ----. 1-SELECT 
 SELECT * FROM Doctor;
