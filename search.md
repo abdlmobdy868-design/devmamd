@@ -1,7 +1,8 @@
 merge امر
 بيخليك تعمل دمج وتعمل في استعلام واحدinsert,delete,updat
 وتستخدمه لما يكون عندك جدولين وعايز جدولين وعايزتحدث البيانات وتضيفها
-المثال
+المثال 
+بدل ما اكتب كل امر لوحده لا بجمعهم في ال merge
 MERGE Employees_Old AS Target
 USING Employees_New AS Source
 ON Target.EmployeeID = Source.EmployeeID
