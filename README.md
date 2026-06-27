@@ -57,3 +57,8 @@ CREATE TABLE PRESCRIPTION (
     FOREIGN KEY (trade_name, strength) REFERENCES DRUG(trade_name, strength) --  3
 );
 -----------------------------------------------------------------------
+ph1--m drug
+    doctor1---m pathent
+    pathint1--m perscripthion
+    doctor1---m perscripthion
+    drug1--m perscriphion
