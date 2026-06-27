@@ -57,7 +57,14 @@ CREATE TABLE PRESCRIPTION (
     FOREIGN KEY (Doctor_ID) REFERENCES DOCTOR(Doctor_ID),
     FOREIGN KEY (Trade_Name, Strength) REFERENCES DRUG(Trade_Name, Strength) -- FK 
 );
-------------------------------------------------------
+
+----للتجربه قيمه افتراضيه للجداوال
+
+INSERT INTO PHARMA_COMPANY VALUES ('Pfizer', '01001234567', 'Cairo, Egypt');
+INSERT INTO DOCTOR (name, specialty, years_experience, phone, email) VALUES ('Ahmed Ali', 'Cardiology', 15, '01111111', 'ahmed@clinic.com');
+INSERT INTO DRUG VALUES ('Panadol', '500mg', 'Pfizer');
+INSERT INTO PATIENT VALUES (1001, 'Sara Mohamed', 28, 'sara@mail.com', '01222222', 'MC-001', 1);
+INSERT INTO PRESCRIPTION VALUES (1001, 1, 'Panadol', '500mg', '2026-05-04', 2);
    
 -------------------------------------------------------
     
